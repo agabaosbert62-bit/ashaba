@@ -1,70 +1,636 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Page Title</title>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discovering Ashaba Trust ✨</title>
+    <style>
+        /* Base Setup & Variables */
+        :root {
+            --primary-love: #ff758c;
+            --secondary-love: #ff7eb3;
+            --dark-bg: #0a0a0e;
+            --card-light: rgba(255, 240, 243, 0.95);
+            --text-main: #4a3b3e;
+        }
 
-<style>
-@font-face { 
-  font-family: "Merriweather Sans";
-  src: url('MerriweatherSans-Medium.ttf') format('truetype');
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', 'Times New Roman', Times, serif;
+        }
 
-body {
-  background: #FFFFFF;
-  margin-bottom: 200px;
-}
+        body {
+            background: var(--dark-bg); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+            position: relative;
+            padding: 10px;
+        }
 
-@keyframes BackgroundGradient {
-  0%{background-position:0% 50%;}
-  50%{background-position: 100% 50% }
-  100%{background-position: 0% 50%}
+        /* Premium Romantic Silk Background */
+        body.unlocked {
+            background: #ffeef2;
+            background-image: radial-gradient(circle at center, #ffffff 0%, #fff0f3 50%, #ffd6e0 100%);
+        }
 
-}
+        /* DYNAMIC FLOATING PARTICLES */
+        .heart-particle {
+            position: absolute;
+            pointer-events: none;
+            bottom: -50px;
+            animation: floatUp 7s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            z-index: 1;
+            display: none;
+        }
 
-.VCE{
-  color: #f2f2f2;
-  background: linear-gradient(45deg, #FCE38A, #f5ad4d, #fd81b5, #f74689, #ad5af3, #8a13ef );
-  background-size: 450% 100%;
-  animation: BackgroundGradient 30s ease infinite;  
-  padding: 20px;
-  margin: 30px;
-  border-radius: 0.5rem;
-}
+        body.unlocked .heart-particle {
+            display: block;
+        }
 
-.VCE_Title{
-  font-family: "Merriweather Sans", sans-serif;
-  font-weight: 400;
-  font-size: 30px;
-  margin-bottom: 0;
-}
+        @keyframes floatUp {
+            0% { transform: translateY(0) translateX(0) rotate(0deg) scale(0.5); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.4; }
+            100% { transform: translateY(-115vh) translateX(120px) rotate(450deg) scale(1.2); opacity: 0; }
+        }
 
-.JTime{
-  font-family: "Merriweather Sans", sans-serif;
-  font-size: 20px;
-}
+        /* MOBILE-FRIENDLY FIXED LOCKBOX CONTAINER */
+        #login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0d0d13;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), visibility 1s;
+            padding: 20px;
+        }
 
-button {
-  font-family: "Merriweather Sans", sans-serif;
-  font-size: 16px;
-  padding: 15px 22px;
-  border:3px #f2f2f2 solid;
-  border-radius:20px;
-  word-break: break-word;
-  white-space: normal;  
-}
+        /* Permanently sized correctly for mobile - no hover expansion required */
+        .login-card-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+            height: 240px; 
+            background: rgba(25, 25, 35, 0.65);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255,255,255,0.1);
+        }
 
-</style>
+        .login-card-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent 0deg 40deg, var(--primary-love) 60deg 80deg, transparent 100deg 220deg, var(--primary-love) 240deg 260deg, transparent 280deg 360deg);
+            animation: neon-rotate 4s linear infinite;
+            z-index: 1;
+        }
+
+        .login-card-inner {
+            position: absolute;
+            inset: 2px; 
+            background: #111116;
+            border-radius: 22px;
+            z-index: 2;
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: calc(100% - 4px);
+            height: calc(100% - 4px);
+        }
+
+        @keyframes neon-rotate { 100% { transform: rotate(360deg); } }
+
+        .login-header {
+            color: var(--primary-love);
+            font-size: 1.1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-bottom: 25px;
+            font-family: Arial, sans-serif;
+            text-shadow: 0 0 10px rgba(255, 117, 140, 0.5);
+        }
+
+        /* Forms are completely visible instantly */
+        .login-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            font-family: Arial, sans-serif;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px 16px;
+            background: #191922;
+            border: 1px solid #2d2d3a;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary-love);
+            box-shadow: 0 0 12px rgba(255, 117, 140, 0.3);
+        }
+
+        .login-btn {
+            background: linear-gradient(135deg, var(--primary-love) 0%, var(--secondary-love) 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 117, 140, 0.4);
+        }
+
+        .login-btn:active {
+            transform: scale(0.98);
+        }
+
+        .error-message {
+            color: #ff4757;
+            font-size: 0.85rem;
+            text-align: center;
+            display: none;
+            margin-top: 4px;
+        }
+
+        /* PUBLIC PRESENTATION CARD */
+        #main-content {
+            opacity: 0;
+            transform: scale(0.95) translateY(30px);
+            transition: opacity 1.5s cubic-bezier(0.25, 1, 0.5, 1) 0.3s, transform 1.5s cubic-bezier(0.25, 1, 0.5, 1) 0.3s;
+            max-width: 540px;
+            width: 100%;
+            text-align: center;
+            display: none; 
+            z-index: 2;
+        }
+
+        body.unlocked #login-overlay { opacity: 0; visibility: hidden; }
+        body.unlocked #main-content { display: block; opacity: 1; transform: scale(1) translateY(0); }
+
+        .card {
+            background: var(--card-light);
+            backdrop-filter: blur(20px);
+            padding: 35px 20px;
+            border-radius: 32px;
+            box-shadow: 0 25px 60px rgba(255, 126, 179, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            position: relative;
+            overflow: hidden; 
+        }
+
+        /* IMAGE BACKGROUND WATERMARK */
+        .card-img-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120%;
+            height: 120%;
+            object-fit: cover;
+            opacity: 0.02; 
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* TEXT BACKGROUND WATERMARK */
+        .card-text-watermark {
+            position: absolute;
+            bottom: 5%;
+            left: 50%;
+            transform: translateX(-50%) rotate(-10deg);
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: rgba(255, 117, 140, 0.03); 
+            pointer-events: none;
+            z-index: 0;
+            white-space: nowrap;
+            font-family: Arial, sans-serif;
+            text-transform: uppercase;
+        }
+
+        /* INTERACTIVE CAROUSEL FRAME */
+        .carousel-container {
+            position: relative;
+            width: 170px;
+            height: 170px;
+            margin: 0 auto 20px auto;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        .carousel-container::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            border-radius: 50%;
+            padding: 4px;
+            background: linear-gradient(135deg, var(--primary-love), var(--secondary-love), #ffb3d1);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: spinRing 12s linear infinite;
+        }
+
+        @keyframes spinRing { 100% { transform: rotate(360deg); } }
+
+        .carousel-wrapper {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+            border: 4px solid #fff;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .carousel-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        .carousel-slide.active {
+            opacity: 1;
+        }
+
+        /* Carousel Navigation Minimal Arrows */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 0.8rem;
+            color: var(--primary-love);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        .carousel-btn:hover { background: #fff; }
+        .carousel-btn.prev { left: -35px; }
+        .carousel-btn.next { right: -35px; }
+
+        h1 {
+            color: #e04d66;
+            margin-bottom: 4px;
+            font-size: 2.2rem;
+            font-weight: 400;
+        }
+
+        .subtitle {
+            color: #9c6d79;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        /* BADGES */
+        .badge-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, var(--primary-love) 0%, #ff8fa3 100%);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+        }
+
+        /* GRID INFO SECTION */
+        .grid-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .info-box {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid #ffd6e0;
+            padding: 15px;
+            border-radius: 16px;
+            text-align: left;
+        }
+
+        .info-box h3 {
+            font-size: 0.82rem;
+            color: #ff5274;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            font-family: Arial, sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .info-box p {
+            color: var(--text-main);
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        /* STORY SECTION STYLE */
+        .story-section {
+            background: rgba(255, 251, 252, 0.85);
+            padding: 22px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border: 1px solid #ffd1dc;
+            text-align: justify;
+        }
+
+        .message {
+            color: var(--text-main);
+            font-size: 1.02rem;
+            line-height: 1.7;
+            font-style: italic;
+        }
+
+        /* THE EXCLUSIVE ANNOUNCEMENT CARD */
+        .exclusive-announcement {
+            background: linear-gradient(135deg, #fff0f3 0%, #ffe3e8 100%);
+            padding: 22px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border: 2px dashed var(--primary-love);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 8px 20px rgba(255, 117, 140, 0.08);
+        }
+
+        .announcement-badge {
+            display: inline-block;
+            background: #ff4766;
+            color: white;
+            font-size: 0.75rem;
+            font-family: Arial, sans-serif;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .announcement-text {
+            color: var(--text-main);
+            font-size: 1.02rem;
+            line-height: 1.6;
+            font-style: italic;
+            font-weight: 600;
+        }
+
+        /* PRAYER SECTION */
+        .prayer-section {
+            background: linear-gradient(135deg, #fff5f7 0%, #ffe3e8 100%);
+            padding: 20px;
+            border-radius: 18px;
+            border-left: 5px solid #ff5274;
+            margin-bottom: 20px;
+        }
+
+        .prayer-title {
+            font-family: Arial, sans-serif;
+            font-size: 0.88rem;
+            font-weight: bold;
+            color: #e04d66;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .prayer-text {
+            color: #5c464a;
+            font-size: 1.02rem;
+            line-height: 1.6;
+        }
+
+        .heart {
+            color: #ff4766;
+            font-size: 2rem;
+            margin-top: 5px;
+            display: inline-block;
+            animation: pulseHeart 1.4s infinite;
+        }
+
+        @keyframes pulseHeart {
+            0%, 70%, 100% { transform: scale(1); }
+            14%, 42% { transform: scale(1.2); }
+            28% { transform: scale(1.05); }
+        }
+
+        /* RESPONSIVE MEDIA QUERIES */
+        @media (max-width: 480px) {
+            .grid-info { grid-template-columns: 1fr; }
+            h1 { font-size: 1.8rem; }
+            .card { padding: 25px 15px; }
+            .carousel-btn.prev { left: -10px; background: rgba(255,255,255,0.9); }
+            .carousel-btn.next { right: -10px; background: rgba(255,255,255,0.9); }
+        }
+    </style>
 </head>
 <body>
-<div class="VCE">
-<h2 class="VCE_Title">Visual Code Editor for HTML, CSS and JavaScript</h2>
-<hr style="border: 3px solid #f2f2f2;">
-<p class="JTime">Whatever code you write above, Live Preview will be visible here</p>
-<br>
-<button type="button" onclick="document.getElementById('Example').innerHTML = Date()">a Javascript Date and Time</button>
-<p class="JTime" id="Example"></p>
-<p class="JTime">Hit the "Clear" button and start typing Code.</p>
-</div>
+
+    <div id="hearts-container"></div>
+
+    <!-- LOCKBOX INTERFACE -->
+    <div id="login-overlay">
+        <div class="login-card-wrapper">
+            <div class="login-card-inner">
+                <div class="login-header">🔒 Unlock Profile</div>
+                <div class="login-form">
+                    <div class="input-group">
+                        <input type="password" id="password-input" placeholder="Enter Secret Key">
+                    </div>
+                    <button class="login-btn" onclick="checkPassword()">View Details</button>
+                    <p class="error-message" id="error-txt">Incorrect key. Try again! 🤔</p>
+                </div>
+            </div>
+        </div>
+    </div>
+s
+    <!-- MAIN DISPLAY CONTENT -->
+    <main id="main-content">
+        <div class="card">
+            
+            <!-- BACKGROUND PHOTO WATERMARK LAYER -->
+            <img src="https://i.postimg.cc/HnB26d6P/IMG-20260718-WA0000-(1)-(1).jpg" class="card-img-watermark" alt="">
+            <div class="card-text-watermark">Ashaba Trust</div>
+            
+            <!-- INTERACTIVE PHOTO CAROUSEL FRAME -->
+            <div class="carousel-container">
+                <button class="carousel-btn prev" onclick="moveSlide(-1)">&#10094;</button>
+                <div class="carousel-wrapper">
+                    <!-- Slide 1 -->
+                    <img src="https://i.postimg.cc/VvKrV51q/Photoroom-20260719-195630423-(1)-1.jpg" class="carousel-slide active" alt="Ashaba Trust 1">
+                    <!-- Slide 2 -->
+                    <img src="https://i.postimg.cc/VvKrV51q/Photoroom-20260719-195630423-(1)-1.jpg" class="carousel-slide" alt="Ashaba Trust 2">
+                </div>
+                <button class="carousel-btn next" onclick="moveSlide(1)">&#10095;</button>
+            </div>
+            
+            <h1>Ashaba Trust</h1>
+            <p class="subtitle">Ugandan • Medical Student</p>
+
+            <!-- KEY BADGES -->
+            <div class="badge-container">
+                <span class="badge">❤️ Kind & Loving</span>
+                <span class="badge">💡 Explorer</span>
+                <span class="badge">💪 Hardworking</span>
+                <span class="badge">🩺 Dedicated Nurse</span>
+            </div>
+
+            <!-- CARD GRID DETAILS -->
+            <div class="grid-info">
+                <div class="info-box">
+                    <h3>Roots</h3>
+                    <p>Born in Ntungamo District, raised with pure traditional family principles.</p>
+                </div>
+                <div class="info-box">
+                    <h3>Family Role</h3>
+                    <p>Proud first born, carrying leadership and care in her blood.</p>
+                </div>
+                <div class="info-box">
+                    <h3>Education</h3>
+                    <p>Currently focusing deeply on medical studies within Rukungiri District.</p>
+                </div>
+                <div class="info-box">
+                    <h3>Nature</h3>
+                    <p>Reserved and rare to have friends, but incredibly friendly once understood.</p>
+                </div>
+            </div>
+            
+            <!-- PRINCIPLES & VISION -->
+            <div class="story-section">
+                <p class="message">
+                    Ashaba remains beautifully unexposed to the negative patterns of the environment, preserving an unspoilt character and unique personality traits. 
+                    <br><br>
+                    With a cautious heart, she prefers meaningful connections over shallow interactions. She is completely determined to serve her community, ready to care for and help sick people under any conditions.
+                </p>
+            </div>
+
+            <!-- EXCLUSIVE ANNOUNCEMENT CARD -->
+            <div class="exclusive-announcement">
+                <div class="announcement-badge">📢 BREAKING NEWS</div>
+                <p class="announcement-text">
+                    "Fellas, fellas, hold the applause. I know the main character in this script is highly sought after, but I’ve already signed the exclusive contract. You're looking at the boyfriend. I know, I know—devastating news for the fans, but the show is officially sold out!"
+                </p>
+            </div>
+
+            <!-- PRAYER / OBJECTIVES -->
+            <div class="prayer-section">
+                <p class="prayer-title">🙏 Pure Intentions & Goals</p>
+                <p class="prayer-text">
+                    "Currently single and focusing on her professional calling, she wishes to find the partner of her dreams. May the Lords hear her prayers, and may mission angels guide her goals forward."
+                </p>
+            </div>
+            
+            <div class="heart">❤️</div>
+        </div>
+    </main>
+
+    <script>
+        // PASSWORD INTERACTION LOGIC
+        const SECRET_PASSWORD = "trust"; 
+
+        function checkPassword() {
+            const userInput = document.getElementById("password-input").value;
+            const errorText = document.getElementById("error-txt");
+
+            if (userInput.toLowerCase() === SECRET_PASSWORD.toLowerCase()) {
+                document.getElementById("main-content").style.display = "block";
+                document.body.classList.add("unlocked");
+                startRomanticAtmosphere(); 
+            } else {
+                errorText.style.display = "block";
+                document.getElementById("password-input").value = "";
+            }
+        }
+
+        document.getElementById("password-input").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") { checkPassword(); }
+        });
+
+        // AMBIENT FLOATING EMOTICONS LOGIC
+        function startRomanticAtmosphere() {
+            const container = document.getElementById("hearts-container");
+            const heartStyles = ['❤️', '💖', '✨', '🌸', '🩺'];
+            
+            setInterval(() => {
+                const particle = document.createElement("div");
+                particle.classList.add("heart-particle");
+                particle.innerHTML = heartStyles[Math.floor(Math.random() * heartStyles.length)];
+                
+                particle.style.left = Math.random() * 100 + "vw";
+                particle.style.animationDuration = (Math.random() * 3 + 5) + "s"; 
+                particle.style.fontSize = (Math.random() * 16 + 14) + "px";
+                
+                container.appendChild(particle);
+                setTimeout(() => { particle.remove(); }, 7000);
+            }, 350);
+        }
+
+        // CAROUSEL INTERACTION LOGIC
+        let slideIndex = 0;
+        function moveSlide(n) {
+            const slides = document.getElementsByClassName("carousel-slide");
+            slides[slideIndex].classList.remove("active");
+            slideIndex = (slideIndex + n + slides.length) % slides.length;
+            slides[slideIndex].classList.add("active");
+        }
+    </script>
 </body>
 </html>
